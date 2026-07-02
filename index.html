@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ============================================================
+       DOM TEMPERO — Landing Page
+       ------------------------------------------------------------
+       COMO EDITAR (procure por estes marcadores no código):
+
+       1. [EDITAR: WHATSAPP]  → número atual: 5561991893159
+                                 (formato: 55 + DDD + número, só dígitos)
+       2. [EDITAR: INSTAGRAM] → troque "domtemperosobradinho" pelo @ real
+       3. [EDITAR: MAPS]      → troque o endereço na URL do Google Maps
+       4. [EDITAR: CARDAPIO]  → os pratos do dia ficam na seção "cardapio"
+       5. [EDITAR: PRECOS]    → os valores ficam na seção "precos"
+       ============================================================ -->
+
+  <title>Dom Tempero — Comida Caseira e Marmitex em Sobradinho-DF</title>
+  <meta name="description" content="Restaurante self-service de comida caseira em Sobradinho-DF. Marmitex, prato feito e buffet por quilo com tempero de verdade. Seg a sáb, 11h às 14h30. Peça pelo WhatsApp!">
+  <meta name="keywords" content="restaurante Sobradinho DF, marmitex Sobradinho, comida caseira Sobradinho, self-service Sobradinho, almoço Sobradinho DF, prato feito Sobradinho">
+  <meta name="author" content="Dom Tempero">
+  <link rel="canonical" href="https://domtempero.vercel.app/">
+
+  <!-- Open Graph — compartilhamento no WhatsApp -->
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Dom Tempero — O almoço de respeito de Sobradinho">
+  <meta property="og:description" content="Comida caseira feita no capricho, todo dia. Self-service e marmitex em Sobradinho-DF. Seg a sáb, 11h às 14h30.">
+  <meta property="og:url" content="https://domtempero.vercel.app/">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Dom Tempero">
+
+  <!-- Schema.org — Restaurant -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Dom Tempero",
+    "description": "Restaurante self-service de comida caseira e marmitex em Sobradinho-DF.",
+    "servesCuisine": "Comida caseira brasileira",
+    "priceRange": "$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Sobradinho",
+      "addressRegion": "DF",
+      "addressCountry": "BR"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "11:00",
+      "closes": "14:30"
+    },
+    "acceptsReservations": "False"
+  }
+  </script>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ VARIÁVEIS E BASE ============ */
+    :root {
+      --verde: #1B3B2F;
+      --verde-claro: #2A5443;
+      --dourado: #C9A227;
+      --dourado-suave: #E3C55C;
+      --off-white: #FAF7F0;
+      --creme: #F2EDE1;
+      --texto: #2C2C28;
+      --texto-suave: #6B6B62;
+      --whatsapp: #25D366;
+      --whatsapp-escuro: #1DA851;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', -apple-system, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--off-white);
+      color: var(--texto);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg { display: block; }
+
+    .container {
+      width: 100%;
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    section { padding: 3.5rem 0; }
+
+    /* Títulos de seção */
+    .secao-titulo {
+      font-family: var(--serif);
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--verde);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .secao-sub {
+      text-align: center;
+      color: var(--texto-suave);
+      margin-bottom: 2.25rem;
+      font-size: 0.98rem;
+    }
+
+    .divisor {
+      width: 48px;
+      height: 3px;
+      background: var(--dourado);
+      border-radius: 2px;
+      margin: 0.75rem auto 1rem;
+    }
+
+    /* ============ LOGO ============ */
+    .logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+      text-decoration: none;
+    }
+
+    .logo-dom {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.6rem;
+      color: var(--dourado-suave);
+      line-height: 1;
+    }
+
+    .logo-tempero {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 0.32em;
+      margin-right: -0.32em; /* compensa o letter-spacing final */
+      color: var(--off-white);
+      line-height: 1.1;
+    }
+
+    .logo-folha { margin-bottom: 0.35rem; }
+
+    /* ============ HERO ============ */
+    .hero {
+      background:
+        radial-gradient(ellipse at 50% -20%, rgba(201,162,39,0.16), transparent 55%),
+        linear-gradient(170deg, var(--verde) 0%, #142E24 100%);
+      color: var(--off-white);
+      text-align: center;
+      padding: 4.5rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero .logo-dom { font-size: 2.3rem; }
+    .hero .logo-tempero { font-size: 2.1rem; }
+
+    .hero-slogan {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--off-white);
+      margin: 1.75rem auto 0.75rem;
+      max-width: 20ch;
+    }
+
+    .hero-texto {
+      color: rgba(250,247,240,0.75);
+      max-width: 34ch;
+      margin: 0 auto 2.25rem;
+      font-size: 1rem;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--whatsapp);
+      color: #fff;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.35);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-whatsapp:hover { background: var(--whatsapp-escuro); transform: translateY(-2px); }
+
+    .hero-nota {
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: rgba(250,247,240,0.6);
+    }
+
+    /* Barra decorativa dourada no rodapé do hero */
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+    }
+
+    /* ============ CARDÁPIO ============ */
+    .cardapio { background: var(--off-white); }
+
+    .cardapio-dia {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dourado);
+      margin-bottom: 0.35rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid rgba(27,59,47,0.1);
+      border-top: 3px solid var(--dourado);
+      border-radius: 12px;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 2px 10px rgba(27,59,47,0.05);
+    }
+
+    .card h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--verde);
+      margin-bottom: 0.4rem;
+    }
+
+    .card p { color: var(--texto-suave); font-size: 0.95rem; }
+
+    .cardapio-aviso {
+      text-align: center;
+      color: var(--texto-suave);
+      font-size: 0.88rem;
+      margin-top: 1.75rem;
+      font-style: italic;
+    }
+
+    /* ============ PREÇOS ============ */
+    .precos { background: var(--creme); }
+
+    .preco-card {
+      background: #fff;
+      border: 1px solid rgba(27,59,47,0.1);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(27,59,47,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .preco-card.destaque {
+      background: var(--verde);
+      color: var(--off-white);
+      border-color: var(--verde);
+    }
+
+    .preco-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--verde);
+      background: rgba(201,162,39,0.18);
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .preco-card.destaque .preco-tag { color: var(--dourado-suave); background: rgba(201,162,39,0.2); }
+
+    .preco-card h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .preco-valor {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dourado);
+      margin: 0.4rem 0;
+    }
+
+    .preco-card.destaque .preco-valor { color: var(--dourado-suave); }
+
+    .preco-desc { font-size: 0.92rem; color: var(--texto-suave); }
+    .preco-card.destaque .preco-desc { color: rgba(250,247,240,0.78); }
+
+    .btn-secundario {
+      display: inline-block;
+      margin-top: 1.1rem;
+      background: var(--dourado);
+      color: var(--verde);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-secundario:hover { background: var(--dourado-suave); transform: translateY(-2px); }
+
+    /* ============ HORÁRIO E LOCALIZAÇÃO ============ */
+    .local { background: var(--off-white); }
+
+    .local-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .local-card {
+      background: #fff;
+      border: 1px solid rgba(27,59,47,0.1);
+      border-radius: 12px;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(27,59,47,0.05);
+    }
+
+    .local-card .icone {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 0.9rem;
+      background: rgba(201,162,39,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .local-card h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--verde);
+      margin-bottom: 0.5rem;
+    }
+
+    .local-card p { color: var(--texto-suave); font-size: 0.95rem; }
+
+    .local-card strong { color: var(--texto); }
+
+    .btn-maps {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      background: var(--verde);
+      color: var(--off-white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.7rem 1.6rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-maps:hover { background: var(--verde-claro); transform: translateY(-2px); }
+
+    /* ============ FOOTER ============ */
+    footer {
+      background: var(--verde);
+      color: rgba(250,247,240,0.8);
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-redes {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer-redes a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(250,247,240,0.1);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .footer-redes a:hover { background: rgba(201,162,39,0.3); transform: translateY(-2px); }
+
+    .footer-frase {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(250,247,240,0.65);
+      max-width: 30ch;
+      margin: 0 auto;
+    }
+
+    .footer-credito {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(250,247,240,0.12);
+      font-size: 0.8rem;
+      color: rgba(250,247,240,0.5);
+    }
+
+    .footer-credito a {
+      color: var(--dourado-suave);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============ BOTÃO FLUTUANTE WHATSAPP ============ */
+    .zap-flutuante {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 99;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      transition: transform 0.15s ease;
+    }
+
+    .zap-flutuante:hover { transform: scale(1.08); }
+
+    /* Animação sutil de entrada das seções */
+    .revelar {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .revelar.visivel { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .revelar { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ============ TELAS MAIORES ============ */
+    @media (min-width: 640px) {
+      section { padding: 4.5rem 0; }
+      .secao-titulo { font-size: 2.25rem; }
+      .hero { padding: 6rem 0 6.5rem; }
+      .hero .logo-dom { font-size: 2.8rem; }
+      .hero .logo-tempero { font-size: 2.6rem; }
+      .hero-slogan { font-size: 2rem; max-width: none; }
+      .cards { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .cards-precos { grid-template-columns: repeat(3, 1fr); }
+      .local-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    }
+
+    @media (min-width: 900px) {
+      .cards { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HERO ==================== -->
+  <header class="hero">
+    <div class="container">
+      <a class="logo" href="#" aria-label="Dom Tempero — início">
+        <!-- Folha de louro (SVG inline) -->
+        <svg class="logo-folha" width="52" height="30" viewBox="0 0 52 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- ramo esquerdo -->
+          <path d="M24 27 C16 25, 8 20, 5 10" stroke="#C9A227" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M6.5 12 C4 10, 3.5 6.5, 5 4 C7.5 5.5, 8.5 9, 6.5 12Z" fill="#C9A227"/>
+          <path d="M10 18 C7 17, 5.5 13.5, 6.5 11 C9.5 12, 11 15.5, 10 18Z" fill="#C9A227"/>
+          <path d="M16 23 C13 22.5, 10.5 19.5, 11 16.5 C14 17, 16.5 20, 16 23Z" fill="#C9A227"/>
+          <path d="M23 26 C20 26, 17 23.5, 17 20.5 C20 20.5, 23 23, 23 26Z" fill="#C9A227"/>
+          <!-- ramo direito -->
+          <path d="M28 27 C36 25, 44 20, 47 10" stroke="#C9A227" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M45.5 12 C48 10, 48.5 6.5, 47 4 C44.5 5.5, 43.5 9, 45.5 12Z" fill="#C9A227"/>
+          <path d="M42 18 C45 17, 46.5 13.5, 45.5 11 C42.5 12, 41 15.5, 42 18Z" fill="#C9A227"/>
+          <path d="M36 23 C39 22.5, 41.5 19.5, 41 16.5 C38 17, 35.5 20, 36 23Z" fill="#C9A227"/>
+          <path d="M29 26 C32 26, 35 23.5, 35 20.5 C32 20.5, 29 23, 29 26Z" fill="#C9A227"/>
+        </svg>
+        <span class="logo-dom">Dom</span>
+        <span class="logo-tempero">TEMPERO</span>
+      </a>
+
+      <h1 class="hero-slogan">O almoço de respeito de Sobradinho</h1>
+      <p class="hero-texto">Comida caseira feita no capricho, todo santo dia. Chega cedo que acaba.</p>
+
+      <!-- [EDITAR: WHATSAPP] troque o número abaixo -->
+      <a class="btn-whatsapp" href="https://wa.me/5561991893159?text=Oi!%20Quero%20pedir%20uma%20marmitex%20do%20Dom%20Tempero" target="_blank" rel="noopener">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/>
+        </svg>
+        Pedir Marmitex
+      </a>
+
+      <p class="hero-nota">Seg a sáb · 11h às 14h30 · Sobradinho-DF</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== CARDÁPIO DO DIA ==================== -->
+    <!-- [EDITAR: CARDAPIO]
+         Para atualizar o cardápio, edite os textos dos cards abaixo.
+         Cada card é um <article class="card"> com título (h3) e descrição (p).
+         Pode adicionar ou remover cards à vontade — o layout se ajusta sozinho. -->
+    <section class="cardapio revelar" id="cardapio">
+      <div class="container">
+        <p class="cardapio-dia" id="dia-semana">Cardápio de hoje</p>
+        <h2 class="secao-titulo">O que tem na panela</h2>
+        <div class="divisor"></div>
+        <p class="secao-sub">Buffet completo com salada, guarnições e aquele arroz soltinho de todo dia.</p>
+
+        <div class="cards">
+
+          <!-- CARD 1: prato principal -->
+          <article class="card">
+            <h3>Frango caipira na panela</h3>
+            <p>Cozido devagar com açafrão da terra, quiabo e cheiro-verde da feira. Receita de família, sem pressa.</p>
+          </article>
+
+          <!-- CARD 2: segunda opção -->
+          <article class="card">
+            <h3>Carne de panela com mandioca</h3>
+            <p>Acém macio desmanchando, mandioca amarelinha e aquele caldo que pede mais arroz.</p>
+          </article>
+
+          <!-- CARD 3: opção do dia -->
+          <article class="card">
+            <h3>Feijão tropeiro mineiro</h3>
+            <p>Feijão de caldo grosso, torresmo crocante, couve rasgada na hora e farinha na medida.</p>
+          </article>
+
+          <!-- CARD 4: guarnições -->
+          <article class="card">
+            <h3>Guarnições da casa</h3>
+            <p>Arroz branco e integral, feijão carioca, macarrão ao alho, farofa de manteiga e purê.</p>
+          </article>
+
+          <!-- CARD 5: saladas -->
+          <article class="card">
+            <h3>Mesa de saladas</h3>
+            <p>Folhas fresquinhas, vinagrete, beterraba, maionese caseira e salada de grão-de-bico.</p>
+          </article>
+
+          <!-- CARD 6: sobremesa -->
+          <article class="card">
+            <h3>Doce do dia</h3>
+            <p>Hoje tem doce de abóbora com coco. Amanhã pode ser pudim — quem chega cedo escolhe.</p>
+          </article>
+
+        </div>
+
+        <p class="cardapio-aviso">O cardápio muda todo dia. Sexta tem feijoada completa e sábado é dia de churrasco no buffet.</p>
+      </div>
+    </section>
+
+    <!-- ==================== PREÇOS ==================== -->
+    <!-- [EDITAR: PRECOS] atualize os valores diretamente nos cards abaixo -->
+    <section class="precos revelar" id="precos">
+      <div class="container">
+        <h2 class="secao-titulo">Preço justo, prato cheio</h2>
+        <div class="divisor"></div>
+        <p class="secao-sub">Sem pegadinha: o que você vê é o que você paga.</p>
+
+        <div class="cards cards-precos">
+
+          <!-- PF -->
+          <article class="preco-card">
+            <span class="preco-tag">No prato</span>
+            <h3>Prato Feito</h3>
+            <p class="preco-valor">R$ 18</p>
+            <p class="preco-desc">Prato montado na hora: arroz, feijão, carne do dia, guarnição e salada. Serve bem.</p>
+          </article>
+
+          <!-- Marmitex — destaque -->
+          <article class="preco-card destaque">
+            <span class="preco-tag">Mais pedido</span>
+            <h3>Marmitex</h3>
+            <p class="preco-valor">R$ 20</p>
+            <p class="preco-desc">Marmitex grande e caprichada pra levar ou receber no trabalho. Você escolhe o que vai dentro.</p>
+            <!-- [EDITAR: WHATSAPP] troque o número abaixo -->
+            <a class="btn-secundario" href="https://wa.me/5561991893159?text=Oi!%20Quero%20pedir%20uma%20marmitex%20do%20Dom%20Tempero" target="_blank" rel="noopener">Pedir agora</a>
+          </article>
+
+          <!-- Bebidas -->
+          <article class="preco-card">
+            <span class="preco-tag">Pra acompanhar</span>
+            <h3>Bebidas</h3>
+            <p class="preco-valor">R$ 5 a R$ 8</p>
+            <p class="preco-desc">Suco natural do dia, refrigerante lata e água. O suco de laranja é espremido na hora.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HORÁRIO E LOCALIZAÇÃO ==================== -->
+    <section class="local revelar" id="local">
+      <div class="container">
+        <h2 class="secao-titulo">Passa aqui na hora do almoço</h2>
+        <div class="divisor"></div>
+        <p class="secao-sub">Do meio-dia em diante enche — quem chega às 11h almoça tranquilo.</p>
+
+        <div class="local-grid">
+
+          <div class="local-card">
+            <div class="icone">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B3B2F" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+            </div>
+            <h3>Horário</h3>
+            <p><strong>Segunda a sábado</strong><br>11h às 14h30</p>
+            <p style="margin-top:0.5rem; font-size:0.85rem;">Domingo é dia de descansar a panela.</p>
+          </div>
+
+          <div class="local-card">
+            <div class="icone">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1B3B2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/>
+                <circle cx="12" cy="10" r="2.5"/>
+              </svg>
+            </div>
+            <h3>Onde estamos</h3>
+            <p><strong>Sobradinho-DF</strong><br>Pertinho do centro, fácil de estacionar.</p>
+            <!-- [EDITAR: MAPS] troque o endereço na URL abaixo pelo endereço completo -->
+            <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Dom+Tempero+Sobradinho+DF" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+              </svg>
+              Como chegar
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="container">
+      <div class="logo" aria-hidden="true">
+        <span class="logo-dom">Dom</span>
+        <span class="logo-tempero" style="font-size:1.1rem;">TEMPERO</span>
+      </div>
+
+      <div class="footer-redes">
+        <!-- [EDITAR: INSTAGRAM] troque o @ na URL abaixo -->
+        <a href="https://instagram.com/domtemperosobradinho" target="_blank" rel="noopener" aria-label="Instagram do Dom Tempero">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FAF7F0" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.2" cy="6.8" r="1" fill="#FAF7F0" stroke="none"/>
+          </svg>
+        </a>
+        <!-- [EDITAR: WHATSAPP] troque o número abaixo -->
+        <a href="https://wa.me/5561991893159?text=Oi!%20Quero%20pedir%20uma%20marmitex%20do%20Dom%20Tempero" target="_blank" rel="noopener" aria-label="WhatsApp do Dom Tempero">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#FAF7F0" aria-hidden="true">
+            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/>
+          </svg>
+        </a>
+      </div>
+
+      <p class="footer-frase">"Comida boa não precisa de segredo. Precisa de tempero e de tempo."</p>
+
+      <p class="footer-credito">
+        © <span id="ano">2026</span> Dom Tempero · Sobradinho-DF<br>
+        Feito por <a href="#" rel="noopener">LANÇAR</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== BOTÃO FLUTUANTE WHATSAPP ==================== -->
+  <!-- [EDITAR: WHATSAPP] troque o número abaixo -->
+  <a class="zap-flutuante" href="https://wa.me/5561991893159?text=Oi!%20Quero%20pedir%20uma%20marmitex%20do%20Dom%20Tempero" target="_blank" rel="noopener" aria-label="Pedir marmitex pelo WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Mostra o dia da semana no cabeçalho do cardápio
+    (function () {
+      const dias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+      const hoje = new Date();
+      document.getElementById('dia-semana').textContent = 'Cardápio de hoje · ' + dias[hoje.getDay()];
+      document.getElementById('ano').textContent = hoje.getFullYear();
+    })();
+
+    // Revela as seções conforme o usuário rola a página
+    (function () {
+      const secoes = document.querySelectorAll('.revelar');
+      if (!('IntersectionObserver' in window)) {
+        secoes.forEach(function (s) { s.classList.add('visivel'); });
+        return;
+      }
+      const observador = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+          if (entrada.isIntersecting) {
+            entrada.target.classList.add('visivel');
+            observador.unobserve(entrada.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      secoes.forEach(function (s) { observador.observe(s); });
+    })();
+  </script>
+</body>
+</html>
